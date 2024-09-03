@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administração - Beauty Spell</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+<body>
+    <header>
+        <img class="logo" src="./assets/logo.jpeg" alt="Logo da Beauty Spell">
+        <h1 class="titulo">Administração</h1>
+        <a href="index.html" class="btn">Voltar para a página principal</a>
+    </header>
+
+    <main>
+        <section>
+            <h2>Gerenciar Produtos</h2>
+            <form id="product-form">
+                <input type="hidden" id="product-id" />
+                <input type="text" id="product-name" placeholder="Nome do Produto" required />
+                <textarea id="product-description" placeholder="Descrição" required></textarea>
+                <input type="number" id="product-price" placeholder="Preço" step="0.01" required />
+                <input type="text" id="product-image" placeholder="URL da Imagem" required />
+                <input type="number" id="product-parcela" placeholder="Parcelamento" required />
+                <button type="submit" id="save-product-btn">Salvar Produto</button>
+            </form>
+
+            <h3>Produtos</h3>
+            <ul id="product-list"></ul>
+        </section>
+    </main>
+
+    <script src="admin.js"></script>
+</body>
+</html>
