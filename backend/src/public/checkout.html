@@ -1,44 +1,53 @@
 <!-- checkout.html -->
 <!DOCTYPE html>
 <html lang="pt">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Beauty Spell</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/x-icon" href="./assets/logo.jpeg">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet" />
+    <link rel="icon" type="image/x-icon" href="./assets/logo.jpeg" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
 </head>
+
 <body>
     <header>
         <img class="logo" src="./assets/logo.jpeg" alt="Logo da Beauty Spell">
         <h1 class="titulo">Beauty Spell</h1>
-        <i class="bi bi-cart carrinho"></i>
+        <div class="icones">
+            <i class="bi bi-cart icon carrinho"></i>
+            <i class="bi bi-star icon favo"></i>
+            <i class="bi bi-person icon conta"></i>
+            <i class="bi bi-gear icon config"></i>
+        </div>
     </header>
 
     <main class="main">
         <section class="section">
             <h2 class="subtitle">Informações de Pagamento:</h2>
-            <form>
+            <form id="formCheckout">
                 <label for="card-number">Número do Cartão:</label>
-                <input type="text" id="card-number" placeholder="XXXX-XXXX-XXXX-XXXX">
+                <input type="text" id="card-number" placeholder="XXXX-XXXX-XXXX-XXXX" />
                 <label for="card-holder">Nome do Titular:</label>
-                <input type="text" id="card-holder" placeholder="Nome do Titular">
+                <input type="text" id="card-holder" placeholder="Nome do Titular" />
                 <label for="expiration-date">Data de Vencimento:</label>
-                <input type="text" id="expiration-date" placeholder="MM/AA">
+                <input type="text" id="expiration-date" placeholder="MM/AA" />
                 <label for="cvv">CVV:</label>
-                <input type="text" id="cvv" placeholder="XXX">
+                <input type="text" id="cvv" placeholder="XXX" />
                 <button id="finalizar-button" class="cssbuttons-io-button btn btn-primary">
                     Finalizar Pedido
                     <div class="icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="green" stroke-width="2">
-                            <path d="M5 12l5 5L19 7"/>
-                          </svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none"
+                            stroke="green" stroke-width="2">
+                            <path d="M5 12l5 5L19 7" />
+                        </svg>
                     </div>
-                  </button>
+                </button>
             </form>
         </section>
 
@@ -50,6 +59,7 @@
     <footer class="footer">
         <p>Todos os direitos © Reservados</p>
     </footer>
-    <script src="./script.js"></script>
+    <script src="./carrinho.js"></script>
 </body>
+
 </html>

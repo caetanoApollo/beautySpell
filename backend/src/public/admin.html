@@ -1,17 +1,29 @@
 <!DOCTYPE html>
 <html lang="pt">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Administração - Beauty Spell</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Beauty Spell</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet" />
+    <link rel="icon" type="image/x-icon" href="./assets/logo.jpeg" />
+    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
 </head>
+
 <body>
     <header>
-        <img class="logo" src="./assets/logo.jpeg" alt="Logo da Beauty Spell">
-        <h1 class="titulo">Administração</h1>
-        <a href="index.html" class="btn">Voltar para a página principal</a>
+        <img class="logo" src="./assets/logo.jpeg" alt="Logo da Beauty Spell" />
+        <h1 class="titulo">Beauty Spell</h1>
+        <div class="icones">
+            <i class="bi bi-cart icon carrinho"></i>
+            <i class="bi bi-star icon favo"></i>
+            <i class="bi bi-person icon conta"></i>
+            <i class="bi bi-gear icon config"></i>
+        </div>
     </header>
 
     <main>
@@ -23,7 +35,13 @@
                 <textarea id="product-description" placeholder="Descrição" required></textarea>
                 <input type="number" id="product-price" placeholder="Preço" step="0.01" required />
                 <input type="text" id="product-image" placeholder="URL da Imagem" required />
-                <input type="number" id="product-parcela" placeholder="Parcelamento" required />
+                <input type="text" id="product-parcela" placeholder="Parcelamento" required />
+                <div class="tipo">
+                    <label for="sessaoDia">Sessão dia</label>
+                    <input type="checkbox" name="sessaoDia" value="sessaoDia" id="chekDia">
+                    <label for="sessaoNoite">Sessão noite</label>
+                    <input type="checkbox" name="sessaoNoite" value="sessaoNoite" id="chekNoite">
+                </div>
                 <button type="submit" id="save-product-btn">Salvar Produto</button>
             </form>
 
@@ -32,6 +50,10 @@
         </section>
     </main>
 
+    <footer>
+        <p>Todos os direitos © Reservados</p>
+    </footer>
     <script src="admin.js"></script>
 </body>
+
 </html>

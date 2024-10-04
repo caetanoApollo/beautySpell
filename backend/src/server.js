@@ -22,7 +22,7 @@ app.get("/", (req, res) => {
   res.redirect("/login");
 });
 
-// Rota GET para carregar a página de login
+//! Rota GET para carregar a página de login
 app.get("/login", (req, res) => {
   const loginPath = path.join(__dirname, "public", "login.html");
   console.log("Servindo arquivo:", loginPath);
@@ -34,7 +34,7 @@ app.get("/login", (req, res) => {
   });
 });
 
-// Rota GET para carregar a página de cadastro
+//! Rota GET para carregar a página de cadastro
 app.get("/cadastro", (req, res) => {
   const cadastroPath = path.join(__dirname, "public", "cadastro.html");
   res.sendFile(cadastroPath, (err) => {
@@ -45,7 +45,43 @@ app.get("/cadastro", (req, res) => {
   });
 });
 
-// Usuários
+//! Verificca user admin
+const jwt = require('jsonwebtoken');
+
+// Middleware para verificar se o usuário é admin
+function verificarAdmin(req, res, next) {
+    const token = req.headers['authorization'];
+    if (!token) {
+        return res.status(403).json({ success: false, message: "Token não fornecido" });
+    }
+
+    try {
+        const decodedToken = jwt.verify(token.split(' ')[1], 'secretKey'); // Verifica o token
+        if (decodedToken.role === 'admin') {
+            req.usuario = decodedToken; // Armazena os dados do usuário decodificado na requisição
+            next(); // Usuário é admin, prossegue
+        } else {
+            return res.status(403).json({ success: false, message: "Acesso negado. Somente administradores podem acessar." });
+        }
+    } catch (error) {
+        return res.status(401).json({ success: false, message: "Token inválido" });
+    }
+}
+
+
+//! Rota GET para carregar a página de admin
+app.get("/admin", verificarAdmin, (req, res) => {
+  const adminPath = path.join(__dirname, "public", "admin.html");
+  res.sendFile(adminPath, (err) => {
+      if (err) {
+          console.error("Erro ao enviar o arquivo admin.html:", err);
+          res.status(500).send("Erro ao carregar a página de admin.");
+      }
+  });
+});
+
+
+//! Usuários
 app.post("/usuarios/cadastro", async (req, res) => { // Rota para cadastrar o usuário
   try {
     const { nome, email, senha } = req.body;
@@ -75,40 +111,30 @@ app.post("/usuarios/cadastro", async (req, res) => { // Rota para cadastrar o us
   }
 });
 
-app.post("/usuarios/login", async (req, res) => { // Rota para logar o usuário 
-  try {
-    const { email, senha } = req.body;
-    if (!email || !senha) {
-      return res
-        .status(400)
-        .json({ success: false, message: "Dados inválidos" });
-    }
+app.post("/usuarios/login", (req, res) => {
+  const { email, senha } = req.body;
 
-    const query = "SELECT * FROM usuarios WHERE email = ? AND senha = ?"; // Comando do MySQL para selecionar 
-    const params = [email, senha];
+  const query = "SELECT * FROM usuarios WHERE email = ? AND senha = ?";
+  const params = [email, senha];
 
-    connection.query(query, params, (err, results) => {
+  connection.query(query, params, (err, results) => {
       if (err) {
-        return res
-          .status(400)
-          .json({ success: false, message: "Erro ao logar usuário" });
+          return res.status(400).json({ success: false, message: "Erro ao logar usuário" });
       }
 
       if (results.length > 0) {
-        res
-          .status(200)
-          .json({ success: true, message: "Usuário logado com sucesso" });
+          const usuario = results[0];
+
+          // Gerar o token JWT com o role do usuário
+          const token = jwt.sign({ id: usuario.id, email: usuario.email, role: usuario.role }, 'secretKey', { expiresIn: '1h' });
+
+          res.status(200).json({ success: true, token });
       } else {
-        res
-          .status(400)
-          .json({ success: false, message: "Email ou senha incorretos" });
+          res.status(400).json({ success: false, message: "Email ou senha incorretos" });
       }
-    });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ success: false, message: "Erro interno" });
-  }
+  });
 });
+
 
 app.delete("/usuarios/deletar", async (req, res) => { //Rota para deletar os usuários
   try {
@@ -179,8 +205,7 @@ app.put("/produtos/editar/:id", async (req, res) => { //Rota para editar o produ
         .json({ success: false, message: "Dados inválidos" });
     }
 
-    const query =
-      "UPDATE produtos SET nome = ?, descricao = ?, preco = ?, imagem = ?, parcela = ? WHERE id = ?"; //Comando MySQL para atualizar o produto pelo id
+    const query = "UPDATE produtos SET nome = ?, descricao = ?, preco = ?, imagem = ?, parcela = ? WHERE id = ?";
     const params = [nome, descricao, preco, imagem, parcela, id];
 
     connection.query(query, params, (err, results) => {
@@ -247,6 +272,25 @@ app.get("/produtos", async (req, res) => {
   }
 });
 
+// rota para página de produto individual
+app.get("/produtos/:id", (req, res) => {
+  const id = req.params.id;
+  const query = "SELECT * FROM produtos WHERE id = ?";
+  
+  connection.query(query, [id], (err, results) => {
+      if (err) {
+          return res.status(500).json({ success: false, message: "Erro ao buscar produto." });
+      }
+
+      if (results.length > 0) {
+          res.status(200).json({ success: true, data: results[0] }); // Retorna o primeiro produto encontrado
+      } else {
+          res.status(404).json({ success: false, message: "Produto não encontrado." });
+      }
+  });
+});
+
+
 // Favoritos
 app.post("/favoritos/adicionar", async (req, res) => {
   try {
@@ -259,6 +303,36 @@ app.post("/favoritos/adicionar", async (req, res) => {
 
     const query =
       "INSERT INTO favoritos (usuario_id, produto_id) VALUES (?, ?)";
+    const params = [usuario_id, produto_id];
+
+    connection.query(query, params, (err, results) => {
+      if (err) {
+        return res
+          .status(400)
+          .json({ success: false, message: "Erro ao adicionar favorito" });
+      }
+
+      res
+        .status(201)
+        .json({ success: true, message: "Favorito adicionado com sucesso" });
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, message: "Erro interno" });
+  }
+});
+
+app.get("/favoritos", async (req, res) => {
+  try {
+    const { usuario_id, produto_id } = req.body;
+    if (!usuario_id || !produto_id) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Dados inválidos" });
+    }
+
+    const query =
+      "SELECT * favoritos";
     const params = [usuario_id, produto_id];
 
     connection.query(query, params, (err, results) => {
@@ -334,3 +408,122 @@ app.get("/favoritos/:usuario_id", async (req, res) => {
     res.status(500).json({ success: false, message: "Erro interno" });
   }
 });
+
+// Carrinho
+
+app.post("/carrinho/adicionar", async (req, res) => {
+  try {
+    const { usuario_id, produto_id } = req.body;
+    if (!usuario_id || !produto_id) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Dados inválidos" });
+    }
+
+    const query =
+      "INSERT INTO carrinho (usuario_id, produto_id) VALUES (?, ?)";
+    const params = [usuario_id, produto_id];
+
+    connection.query(query, params, (err, results) => {
+      if (err) {
+        return res
+          .status(400)
+          .json({ success: false, message: "Erro ao adicionar no carrinho" });
+      }
+
+      res
+        .status(201)
+        .json({ success: true, message: "Produto adicionado com sucesso" });
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, message: "Erro interno" });
+  }
+});
+
+app.get("/carrinho", async (req, res) => {
+  try {
+    const { usuario_id, produto_id } = req.body;
+    if (!usuario_id || !produto_id) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Dados inválidos" });
+    }
+
+    const query =
+      "SELECT * carrinho";
+    const params = [usuario_id, produto_id];
+
+    connection.query(query, params, (err, results) => {
+      if (err) {
+        return res
+          .status(400)
+          .json({ success: false, message: "Erro" });
+      }
+
+      res
+        .status(201)
+        .json({ success: true, message: "sucesso" });
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, message: "Erro interno" });
+  }
+});
+
+// app.delete("/favoritos/remover", async (req, res) => {
+//   try {
+//     const { usuario_id, produto_id } = req.body;
+//     if (!usuario_id || !produto_id) {
+//       return res
+//         .status(400)
+//         .json({ success: false, message: "Dados inválidos" });
+//     }
+
+//     const query =
+//       "DELETE FROM favoritos WHERE usuario_id = ? AND produto_id = ?";
+//     const params = [usuario_id, produto_id];
+
+//     connection.query(query, params, (err, results) => {
+//       if (err) {
+//         return res
+//           .status(400)
+//           .json({ success: false, message: "Erro ao remover favorito" });
+//       }
+
+//       res
+//         .status(201)
+//         .json({ success: true, message: "Favorito removido com sucesso" });
+//     });
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).json({ success: false, message: "Erro interno" });
+//   }
+// });
+
+// app.get("/carrinho/:usuario_id", async (req, res) => {
+//   try {
+//     const usuario_id = req.params.usuario_id;
+//     if (!usuario_id) {
+//       return res
+//         .status(400)
+//         .json({ success: false, message: "Dados inválidos" });
+//     }
+
+//     const query = "SELECT * FROM favoritos WHERE usuario_id = ?";
+//     const params = [usuario_id];
+
+//     connection.query(query, params, (err, results) => {
+//       if (err) {
+//         return res
+//           .status(400)
+//           .json({ success: false, message: "Erro ao buscar favoritos" });
+//       }
+
+//       res.status(200).json({ success: true, data: results });
+//     });
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).json({ success: false, message: "Erro interno" });
+//   }
+// });

@@ -7,8 +7,8 @@
 /* Header */
 header{
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
     background-color: #00001A;
 }
 
@@ -16,7 +16,7 @@ header{
     height: 10vh;
 }
 
-.carrinho{
+.icon{
     font-size: 25px;
     color: #7159A8;
     margin-right: 2vw;
@@ -56,14 +56,12 @@ footer p{
     align-items: center;
 }
 
-.produto img{
-    height: 25vh;
-    border-radius: 5px;
+.produto img {
+  height: 15rem;
 }
 
-.produto p{
-    color: #00001A;
-    font-size: 13px;
+.produto p {
+  margin: 10px 0;
 }
 
 #parcela{
@@ -72,11 +70,12 @@ footer p{
 }
 
 .box-conteudo{
-    display: flex;
-    justify-content: center;
-    gap: 15vh;
-    padding: 2rem;
+  display: flex;
+  flex-wrap: wrap; /* Permite que os itens quebrem para a próxima linha quando a linha atual atingir o limite */
+  justify-content: space-between; /* Espaçamento entre os itens */
+  gap: 20px; /* Espaço entre os produtos */
 }
+
 
 .produto a {
   text-decoration: none;
@@ -84,6 +83,10 @@ footer p{
 }
 
 .produto {
+  flex: 1 1 calc(25% - 20px); /* Ocupa 25% da largura, menos a margem (4 produtos por linha) */
+  box-sizing: border-box; /* Garante que padding e borda sejam incluídos no tamanho do elemento */
+  padding: 10px;
+  text-align: center;
   cursor: pointer;
 }
 
@@ -180,7 +183,7 @@ footer p{
   }
 
   .produtoPrin img{
-    width: 30rem;
+    width: 19.75dvw;
     border-radius: 5px;
   }
 
@@ -198,9 +201,11 @@ footer p{
 
   .buttonsPro button {
     display: flex;
-    margin-top: 20px;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem 1rem;
     gap: 30px;
-    padding: 10px;
+    margin-top: 20px;
     background-color: #11084C;
     color: #fff;
     border: none;
@@ -279,7 +284,7 @@ footer p{
   font-size: 1rem;
 }
 
-form {
+#formformCheckout {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -436,4 +441,66 @@ input[type="text"] {
 .nConta a{
   color: #fff;
   text-decoration: none;
+}
+
+/* formulário */
+
+#product-form{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  gap: 2rem;
+}
+
+#product-form input, textarea{
+  background-color: #11084C;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  width: 20rem;
+}
+
+#product-form ::placeholder{
+  color: #fff;
+}
+
+#product-form button, .btn-formPdt{
+  background-color: #11084C;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+#product-form button:hover, .btn-formPdt:hover{
+  background-color: #714da6;
+}
+
+#product-list{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  gap: 2rem;
+
+  list-style: none;
+}
+
+.btn-edit{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+}
+
+.tipo{
+  display: flex;
+  align-items: center;
+}
+
+#chekDia, #chekNoite{
+  height: 20px;
 }
