@@ -1,207 +1,123 @@
-# Beauty Spell - Cosméticos Místicos
+## Documentação Completa - *Beauty Spell*
 
-Seja bem-vindo ao **Beauty Spell**, um site que traz cosméticos místicos! Este projeto foi criado com muito carinho por três alunos do Senac São Leopoldo: Caetano Apollo, Eduarda Cheiran e Isabelli Fernandes. Utilizamos HTML, CSS e JavaScript para dar vida a essa experiência mágica.
-
-## O que você vai encontrar
-
-### Páginas HTML
-
-- **`index.html`**: Essa é a nossa página inicial, onde você pode explorar as seções "Sessão Dia" e "Sessão Noite", que apresentam produtos especialmente selecionados para cada momento do seu dia. Também temos um cabeçalho, rodapé e um link para o nosso script mágico.
-
-- **`carrinho.html`**: Aqui você pode ver o que já adicionou ao carrinho. A página exibe uma tabela com todos os detalhes dos produtos, como nome, preço, quantidade e subtotal. Além disso, tem um resumo do carrinho e botões para "Confirmar Pedido" ou "Voltar para a página principal".
-
-- **`checkout.html`**: Esta é a página onde você finaliza sua compra. Basta preencher suas informações de pagamento e clicar em "Finalizar Pedido". Se quiser voltar para a página principal, também tem um botão para isso.
-
-- **`produto.html`**: Quando você quer saber mais sobre um produto específico, esta página mostra tudo: imagem, nome, preço, descrição e, claro, os botões para "Adicionar ao Carrinho" ou "Comprar Agora". E se mudar de ideia, pode voltar facilmente para a página anterior.
-
-### Arquivo CSS
-
-- **Estilos Personalizados**: Nosso arquivo CSS cuida de todo o estilo do site, desde as cores e fontes até o layout e a formatação de cada elemento, como cabeçalhos, rodapés e botões.
-
-### Arquivo JavaScript
-
-- **Carregar Produtos**: Esse script é responsável por preencher as seções de produtos na página inicial, puxando as informações de um banco de dados que criamos com carinho.
-
-- **Carregar Detalhes do Produto**: Quer saber mais sobre um produto específico? Essa função traz todos os detalhes diretamente para a página de produto.
-
-- **Adicionar ao Carrinho**: Gostou de um produto? Com essa função, você pode adicioná-lo ao carrinho, e nós o guardamos para você.
-
-- **Carregar Carrinho**: Quando você quiser ver o que já colocou no carrinho, essa função vai exibir todos os produtos e calcular o total para você.
-
-- **Redirecionar para Carrinho/Finalizar Compra**: Essas funções ajudam você a navegar entre as páginas de carrinho e finalização de compra, de forma simples e rápida.
-
-- **Obter ID do Produto da URL**: Quando você clica em um produto, essa função garante que você veja os detalhes corretos.
-
-- **Configurar Botão Voltar**: Se você decidir voltar à página principal, essa função garante que o botão "Voltar" funcione perfeitamente.
+### Introdução
+O **Beauty Spell** é um projeto de e-commerce de cosméticos místicos, desenvolvido por três alunos do Senac São Leopoldo: Caetano Apollo, Eduarda Cheiran e Isabelli Fernandes. O projeto foi criado utilizando tecnologias web modernas, como HTML, CSS, JavaScript e banco de dados MySQL, proporcionando uma experiência interativa e mágica para os usuários.
 
 ---
 
-# BeautySpell API
+### Tecnologias Utilizadas
+- **Frontend**:
+  - **HTML5**: Estrutura das páginas.
+  - **CSS3**: Estilização e layout das páginas.
+  - **JavaScript (Vanilla JS)**: Funcionalidades interativas, como adicionar produtos ao carrinho e listar produtos.
+  
+- **Backend**:
+  - **Node.js**: Servidor backend para lidar com requisições HTTP e rotas da API.
+  - **Express.js**: Framework minimalista para a criação de APIs.
+  - **MySQL**: Banco de dados relacional para armazenar informações de usuários, produtos, carrinho de compras, e favoritos.
+  
+- **Banco de Dados**:
+  - MySQL: Gerenciamento de dados do sistema, incluindo tabelas para usuários, produtos, carrinho e favoritos.
 
-Além do site, desenvolvemos uma API super útil para gerenciar usuários, produtos e favoritos. Criada com Node.js, Express e MySQL, essa API é o coração que faz tudo funcionar por trás das cenas.
+---
 
-## Estrutura do Projeto
+### Como Funciona
+#### Funcionalidades Principais:
+1. **Navegação de Produtos**:
+   - A página inicial exibe uma seleção de produtos, divididos em sessões específicas, como "Sessão Dia" e "Sessão Noite".
+   - O JavaScript é responsável por carregar dinamicamente os produtos e exibi-los nas seções apropriadas.
 
-- **bancoDados.sql**: Um script SQL que cria o banco de dados e todas as tabelas que você precisa.
-- **db_beautySpell.js**: O arquivo que configura a conexão com o banco de dados MySQL.
-- **server.js**: O ponto de entrada do servidor Node.js, onde todas as rotas da API estão definidas.
+2. **Carrinho de Compras**:
+   - Os usuários podem adicionar produtos ao carrinho, visualizar o conteúdo e gerenciar suas compras antes de confirmar o pedido.
+   - O backend gerencia as operações CRUD (Criar, Ler, Atualizar, Deletar) no carrinho de compras.
 
-## O que você precisa
+3. **Finalização de Compras**:
+   - A página de checkout permite que os usuários forneçam suas informações de pagamento e finalizem o pedido.
 
-Antes de começar, certifique-se de ter:
+4. **Favoritar Produtos**:
+   - Os usuários podem marcar produtos como favoritos e gerenciar sua lista de favoritos através de rotas específicas da API.
 
-- [Node.js](https://nodejs.org/)
-- [MySQL](https://www.mysql.com/)
+---
 
-## Como Instalar
+### Estrutura do Projeto
+Abaixo está um resumo dos principais arquivos e diretórios:
 
-1. Clone o repositório:
+#### Diretórios:
+- `backend/`: Contém todo o código de backend (API, rotas, etc.).
+- `bancoDados/`: Contém o script SQL para criação das tabelas e base de dados.
+  
+#### Arquivos Importantes:
+- **`index.html`**: Página inicial com listagem de produtos.
+- **`carrinho.html`**: Página de gerenciamento do carrinho de compras.
+- **`checkout.html`**: Página para finalização do pedido.
+- **`server.js`**: Ponto de entrada do servidor backend.
+- **`db_beautySpell.js`**: Arquivo de configuração da conexão com o banco de dados MySQL.
 
+---
+
+### API Endpoints
+A API do *Beauty Spell* oferece diversas funcionalidades através das seguintes rotas:
+
+#### **Usuários**:
+- `POST /usuarios/cadastro`: Cadastro de novos usuários.
+- `POST /usuarios/login`: Autenticação de usuários.
+- `PUT /usuarios/editar`: Atualização de informações de um usuário.
+- `DELETE /usuarios/deletar`: Exclusão de um usuário.
+
+#### **Produtos**:
+- `POST /produtos/cadastro`: Cadastro de um novo produto.
+- `PUT /produtos/editar/:id`: Edição de um produto existente.
+- `DELETE /produtos/deletar/:id`: Exclusão de um produto.
+- `GET /produtos`: Listagem de todos os produtos.
+
+#### **Favoritos**:
+- `POST /favoritos/adicionar`: Adiciona um produto aos favoritos de um usuário.
+- `DELETE /favoritos/remover`: Remove um produto dos favoritos de um usuário.
+- `GET /favoritos/:usuario_id`: Lista todos os produtos favoritos de um usuário específico.
+
+#### **Carrinho**:
+- `POST /carrinho/adicionar`: Adiciona um produto ao carrinho.
+- `DELETE /carrinho/remover`: Remove um produto do carrinho.
+- `GET /carrinho/:usuario_id`: Lista os itens do carrinho de um usuário específico.
+
+---
+
+### Configuração do Banco de Dados
+O banco de dados MySQL contém as seguintes tabelas principais:
+
+- **Usuários (`usuarios`)**: Armazena informações dos usuários (nome, email, senha).
+- **Produtos (`produtos`)**: Armazena os detalhes dos produtos (nome, descrição, preço, imagem).
+- **Carrinho (`carrinho`)**: Relaciona os produtos ao carrinho de compras do usuário.
+- **Favoritos (`favoritos`)**: Lista de produtos favoritos de cada usuário.
+
+---
+
+### Configuração e Execução
+
+#### Pré-requisitos:
+- **Node.js** (versão 14 ou superior)
+- **MySQL** (ou um servidor compatível)
+  
+#### Passos:
+1. **Clone o repositório**:
    ```bash
-   git clone https://github.com/seu-usuario/beautySpell.git
-   cd beautySpell
+   git clone <URL do repositório>
    ```
 
-2. Instale as dependências:
-
+2. **Instale as dependências**:
    ```bash
+   cd backend
    npm install
    ```
 
-3. Configure o banco de dados MySQL:
+3. **Configure o banco de dados**:
+   - Execute o script `bancoDados.sql` para criar o banco e as tabelas.
+   - Configure as credenciais de banco no arquivo `db_beautySpell.js`.
 
-   - Execute o script SQL para criar o banco de dados e as tabelas:
-
-     ```bash
-     mysql -u root -p < caminho/para/bancoDados.sql
-     ```
-
-   - Verifique e, se necessário, ajuste as credenciais no arquivo `db_beautySpell.js`:
-
-     ```javascript
-     const connection = mysql.createConnection({
-         host: 'localhost',
-         user: 'root',
-         password: 'sua-senha',
-         database: 'beautySpell'
-     });
-     ```
-
-## Como Usar
-
-1. Inicie o servidor:
-
+4. **Inicie o servidor**:
    ```bash
-   node server.js
+   npm start
    ```
 
-   O servidor estará rodando na porta `3000`. Acesse em `http://localhost:3000`.
-
-## Rotas da API
-
-### Usuários
-
-- **Cadastro de Usuário**
-  - **Rota**: `POST /usuarios/cadastro`
-  - **O que faz**: Cadastra um novo usuário.
-  - **O que enviar**:
-    ```json
-    {
-      "nome": "Nome do Usuário",
-      "email": "email@example.com",
-      "senha": "senha123"
-    }
-    ```
-
-- **Login de Usuário**
-  - **Rota**: `POST /usuarios/login`
-  - **O que faz**: Realiza o login do usuário.
-  - **O que enviar**:
-    ```json
-    {
-      "email": "email@example.com",
-      "senha": "senha123"
-    }
-    ```
-
-- **Deletar Usuário**
-  - **Rota**: `DELETE /usuarios/deletar`
-  - **O que faz**: Deleta um usuário.
-  - **O que enviar**:
-    ```json
-    {
-      "email": "email@example.com"
-    }
-    ```
-
-### Produtos
-
-- **Cadastro de Produto**
-  - **Rota**: `POST /produtos/cadastro`
-  - **O que faz**: Cadastra um novo produto.
-  - **O que enviar**:
-    ```json
-    {
-      "nome": "Nome do Produto",
-      "descricao": "Descrição do Produto",
-      "preco": 99.99,
-      "imagem": "url/imagem.jpg",
-      "parcela": 12
-    }
-    ```
-
-- **Editar Produto**
-  - **Rota**: `PUT /produtos/editar/:id`
-  - **O que faz**: Edita um produto existente.
-  - **O que enviar**:
-    ```json
-    {
-      "nome": "Nome do Produto",
-      "descricao": "Descrição do Produto",
-      "preco": 99.99,
-      "imagem": "url/imagem.jpg",
-      "parcela": 12
-    }
-    ```
-
-- **Deletar Produto**
-  - **Rota**: `DELETE /produtos/deletar/:id`
-  - **O que faz**: Deleta um produto existente.
-
-- **Listar Produtos**
-  - **Rota**: `GET /produtos`
-  - **O que faz**: Retorna uma lista de todos os produtos.
-
-### Favoritos
-
-- **Adicionar aos Favoritos**
-  - **Rota**: `POST /favoritos/adicionar`
-  - **O que faz**: Adiciona um produto à lista de favoritos do usuário.
-  - **O que enviar**:
-    ```json
-    {
-      "usuario_id": 1,
-      "produto_id": 10
-    }
-    ```
-
-- **Remover dos Favoritos**
-  - **Rota**: `DELETE /favoritos/remover`
-  - **O que faz**: Remove um produto dos favoritos do usuário.
-  - **O que enviar**:
-    ```json
-    {
-      "usuario_id": 1,
-      "produto_id": 10
-    }
-    ```
-
-- **Listar Favoritos**
-  - **Rota**: `GET /favoritos/:usuario_id`
-  - **O que faz**: Lista todos os produtos favoritos de um usuário específico.
-
-## Estrutura de Arquivos
-
-- **bancoDados.sql**: Script SQL para criação do banco de dados `beautySpell` e suas tabelas.
-- **db_beautySpell.js**: Configuração da conexão com o banco de dados MySQL.
-- **server.js**: Ponto de entrada do servidor, onde as rotas da API são definidas.
+5. **Acesse o frontend**:
+   Abra o arquivo `index.html` no navegador para acessar a página inicial.
