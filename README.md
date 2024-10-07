@@ -9,7 +9,7 @@ O **Beauty Spell** é um projeto de e-commerce de cosméticos místicos, desenvo
 - **Frontend**:
   - **HTML5**: Estrutura das páginas.
   - **CSS3**: Estilização e layout das páginas.
-  - **JavaScript (Vanilla JS)**: Funcionalidades interativas, como adicionar produtos ao carrinho e listar produtos.
+  - **JavaScript**: Funcionalidades interativas, como adicionar produtos ao carrinho e listar produtos.
   
 - **Backend**:
   - **Node.js**: Servidor backend para lidar com requisições HTTP e rotas da API.
@@ -101,7 +101,7 @@ O banco de dados MySQL contém as seguintes tabelas principais:
 #### Passos:
 1. **Clone o repositório**:
    ```bash
-   git clone <URL do repositório>
+   git clone https://github.com/caetanoApollo/beautySpell.git
    ```
 
 2. **Instale as dependências**:
