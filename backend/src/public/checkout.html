@@ -41,11 +41,6 @@
                 <input type="text" id="cvv" placeholder="XXX" />
                 <button id="finalizar-button" class="cssbuttons-io-button btn btn-primary">
                     Finalizar Pedido
-                    <div class="icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none"
-                            stroke="green" stroke-width="2">
-                            <path d="M5 12l5 5L19 7" />
-                        </svg>
                     </div>
                 </button>
             </form>
@@ -54,12 +49,21 @@
         <section class="voltar">
             <button id="back-button">Voltar para a página principal</button>
         </section>
+
+        <div id="logoutModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Tem certeza que deseja deslogar?</h2>
+                <button id="confirm-logout">Sim, deslogar</button>
+                <button id="cancel-logout">Cancelar</button>
+            </div>
+        </div>
     </main>
 
     <footer class="footer">
         <p>Todos os direitos © Reservados</p>
     </footer>
-    <script src="./carrinho.js"></script>
+    <script src="./checkout.js"></script>
 </body>
 
 </html>

@@ -136,11 +136,8 @@ function setupBackButton() {
 }
 
 function redirectToLogin() {
-  if (!localStorage.getItem('token')) {
+  if (!localStorage.getItem('token'))
     window.location.href = 'login.html';
-  } else {
-    window.location.href = 'config.html'
-  }
 }
 
 function redirectToCart() {
@@ -149,6 +146,10 @@ function redirectToCart() {
 
 function redirectToAdmin() {
   window.location.href = 'admin.html';
+}
+
+function redirectToFavorites() {
+  window.location.href = 'favorites.html';
 }
 
 function obterUsuarioID() {
@@ -168,7 +169,43 @@ function salvarUsuarioID(usuarioID) {
   localStorage.setItem('usuario_id', usuarioID);
 };
 
+// Script para o modal
+const modal = document.getElementById("logoutModal");
+const btnConta = document.querySelector(".conta");
+const span = document.getElementsByClassName("close")[0];
+const confirmLogout = document.getElementById("confirm-logout");
+const cancelLogout = document.getElementById("cancel-logout");
+
+// Quando o usuário clicar no botão, abre o modal
+btnConta.onclick = function() {
+    modal.style.display = "block";
+}
+
+// Quando o usuário clicar no "x", fecha o modal
+span.onclick = function() {
+    modal.style.display = "none";
+}
+
+// Quando o usuário clicar no botão "Cancelar", fecha o modal
+cancelLogout.onclick = function() {
+    modal.style.display = "none";
+}
+
+// Quando o usuário clicar em "Sim, deslogar"
+confirmLogout.onclick = function() {
+    localStorage.removeItem('token'); // Remove o token do localStorage
+    alert("Deslogado com sucesso!");
+    window.location.href = 'login.html'; // Redireciona para a página de login
+}
+
+// Quando o usuário clica fora do modal, fecha o modal
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+
 document.querySelector('.carrinho').addEventListener('click', redirectToCart);
 document.querySelector('.conta').addEventListener('click', redirectToLogin);
 document.querySelector('.config').addEventListener('click', redirectToAdmin);
-// document.querySelector('.addCart').addEventListener('click', função para página de favoritos);
+document.querySelector('.favo').addEventListener('click', redirectToFavorites);

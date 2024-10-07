@@ -35,9 +35,9 @@
 
             <div class="buttonsPro">
                 <button id="addCart"><i class="bi bi-cart"></i>Adicionar ao carrinho</button>
-                <button><i class="bi bi-bag"></i>Comprar Agora</button>
-                <button><i class="bi bi-star"></i>Adicionar favorito</button>
-            </div>  
+                <button id="buyNow"><i class="bi bi-bag"></i>Comprar Agora</button>
+                <button id="addFavorite"><i class="bi bi-star"></i>Adicionar favorito</button>
+            </div>
         </section>
 
         <section>
@@ -47,11 +47,18 @@
         <section class="voltar">
             <button id="back-button">Voltar para a página principal</button>
         </section>
+
+        <div id="logoutModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Tem certeza que deseja deslogar?</h2>
+                <button id="confirm-logout">Sim, deslogar</button>
+                <button id="cancel-logout">Cancelar</button>
+            </div>
+        </div>
     </main>
 
     <footer>
-        <p>Todos os direitos © Reservados</p>
+        <p>Todos os direitos &copy; Reservados</p>
     </footer>
-    <script  src="./produto.js"></script>
-</body>
-</html>
+    <script src="produto.js"></script>

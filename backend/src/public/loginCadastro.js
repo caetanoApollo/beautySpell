@@ -52,7 +52,6 @@ function salvarUsuarioID(usuarioID) {
     }
 }
 
-
 // Função para remover o token do usuário
 function removeUserToken() {
     localStorage.removeItem('token');
@@ -86,13 +85,12 @@ function isRegisterFormValid() {
     return nome !== '' && email !== '' && senha !== '' && confirmPassword !== '' && senha === confirmPassword;
 }
 
-
 // Função para enviar o formulário de login
 async function submitLoginForm(form) {
     if (isLoginFormValid(form)) {
         const email = form.email.value;
         const senha = form.senha.value;
-        const url = `${urlAPI}/login`;
+        const url = `${urlAPI}/usuarios/login`;
         const body = { email, senha };
 
         try {
@@ -100,7 +98,7 @@ async function submitLoginForm(form) {
             if (response.success) {
                 // Salvar o token e o ID do usuário no localStorage
                 saveUserToken(response.token);
-                salvarUsuarioID(response.usuario.id); // Certifique-se de salvar o ID do usuário
+                localStorage.setItem('usuario_id', response.usuario.id); // Adicione essa linha aqui
                 window.location.href = 'index.html';
             } else {
                 alert('E-mail ou senha inválidos');
@@ -143,6 +141,7 @@ async function submitRegisterForm() {
 }
 
 // Função para enviar o formulário de login
+// Função para enviar o formulário de login
 async function loginUsuario() {
     const email = document.getElementById('email-login').value;
     const senha = document.getElementById('senha-login').value;
@@ -152,9 +151,10 @@ async function loginUsuario() {
 
     try {
         const response = await fetchData(url, 'POST', body);
-        if (response.success) {
+        if (response && response.success) {
             alert('Login realizado com sucesso!');
             saveUserToken(response.token);
+            localStorage.setItem('usuario_id', response.usuario.id); // Adicione essa linha aqui
             window.location.href = 'index.html';
         } else {
             alert('E-mail ou senha inválidos');
@@ -191,7 +191,6 @@ function obterUsuarioID() {
     }
     return usuarioID;
 }
-
 
 document.querySelector('.carrinho').addEventListener('click', redirectToCart);
 document.querySelector('.conta').addEventListener('click', redirectToLogin);

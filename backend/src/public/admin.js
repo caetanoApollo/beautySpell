@@ -144,22 +144,6 @@ async function editProduct(id) {
     }
 };
 
-function redirectToLogin() {
-    if (!localStorage.getItem('token')) {
-        window.location.href = 'login.html';
-    } else {
-        window.location.href = 'config.html'
-    }
-}
-
-function redirectToCart() {
-    window.location.href = 'carrinho.html';
-}
-
-function redirectToAdmin() {
-    window.location.href = 'admin.html';
-}
-
 function obterUsuarioID() {
     const usuarioID = localStorage.getItem('usuario_id');
 
@@ -176,11 +160,6 @@ function obterUsuarioID() {
 function salvarUsuarioID(usuarioID) {
     localStorage.setItem('usuario_id', usuarioID);
 };
-
-document.querySelector('.carrinho').addEventListener('click', redirectToCart);
-document.querySelector('.conta').addEventListener('click', redirectToLogin);
-document.querySelector('.config').addEventListener('click', redirectToAdmin);
-// document.querySelector('.addCart').addEventListener('click', função para página de favoritos);
 
 document.getElementById('product-form').addEventListener('submit', saveProduct);
 
@@ -207,13 +186,72 @@ function isUserAdmin() {
     return false;
 };
 
+// Script para o modal
+const modal = document.getElementById("logoutModal");
+const btnConta = document.querySelector(".conta");
+const span = document.getElementsByClassName("close")[0];
+const confirmLogout = document.getElementById("confirm-logout");
+const cancelLogout = document.getElementById("cancel-logout");
+
+// Quando o usuário clicar no botão, abre o modal
+btnConta.onclick = function () {
+    modal.style.display = "block";
+}
+
+// Quando o usuário clicar no "x", fecha o modal
+span.onclick = function () {
+    modal.style.display = "none";
+}
+
+// Quando o usuário clicar no botão "Cancelar", fecha o modal
+cancelLogout.onclick = function () {
+    modal.style.display = "none";
+}
+
+// Quando o usuário clicar em "Sim, deslogar"
+confirmLogout.onclick = function () {
+    localStorage.removeItem('token'); // Remove o token do localStorage
+    alert("Deslogado com sucesso!");
+    window.location.href = 'login.html'; // Redireciona para a página de login
+}
+
+// Quando o usuário clica fora do modal, fecha o modal
+window.onclick = function (event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+
+// Função para configurar o botão de voltar
 function setupBackButton() {
     const backButton = document.getElementById('back-button');
     if (backButton) {
         backButton.addEventListener('click', () => {
-            window.history.back();
+            window.location.href = 'index.html';
         });
     }
-};
+}
+
+function redirectToLogin() {
+    if (!localStorage.getItem('token'))
+        window.location.href = 'login.html';
+}
+
+function redirectToCart() {
+    window.location.href = 'carrinho.html';
+}
+
+function redirectToAdmin() {
+    window.location.href = 'admin.html';
+}
+
+function redirectToFavorites() {
+    window.location.href = 'favorites.html';
+}
+
+document.querySelector('.carrinho').addEventListener('click', redirectToCart);
+document.querySelector('.conta').addEventListener('click', redirectToLogin);
+document.querySelector('.config').addEventListener('click', redirectToAdmin);
+document.querySelector('.favo').addEventListener('click', redirectToFavorites);
 
 setupBackButton();
